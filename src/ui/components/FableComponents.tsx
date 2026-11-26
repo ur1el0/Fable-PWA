@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Bookmark,
   BookmarkCheck,
@@ -228,6 +229,15 @@ export function PwaInstallAction() {
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
+  useEffect(() => {
+    if (!showGuideModal) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowGuideModal(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [showGuideModal]);
+
   if (isStandalone) return null;
 
   const handleInstall = async () => {
@@ -251,87 +261,90 @@ export function PwaInstallAction() {
         <span>{deferredPrompt ? 'Install App' : 'Get Mobile App'}</span>
       </button>
 
-      {showGuideModal && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="fable-install-dialog-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{ backgroundColor: 'var(--surface-backdrop)' }}
-        >
+      {showGuideModal &&
+        typeof document !== 'undefined' &&
+        createPortal(
           <div
-            className="fable-card w-full max-w-md p-6"
-            style={{ boxShadow: 'var(--shadow-modal)' }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="fable-install-dialog-title"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setShowGuideModal(false);
+            }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            style={{ backgroundColor: 'var(--surface-backdrop)' }}
           >
-            <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4">
-              <div className="flex items-center gap-2.5">
-                <Smartphone className="h-5 w-5 text-[var(--text-link)]" />
-                <h2
-                  id="fable-install-dialog-title"
-                  className="font-editorial text-lg font-semibold text-[var(--text-primary)]"
+            <div
+              className="fable-card fable-modal-enter max-h-[85vh] w-full max-w-md overflow-y-auto p-6"
+              style={{ boxShadow: 'var(--shadow-modal)' }}
+            >
+              <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4">
+                <div className="flex items-center gap-2.5">
+                  <Smartphone className="h-5 w-5 text-[var(--text-link)]" />
+                  <h2
+                    id="fable-install-dialog-title"
+                    className="font-editorial text-lg font-semibold text-[var(--text-primary)]"
+                  >
+                    Install Fable
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowGuideModal(false)}
+                  aria-label="Close install instructions"
+                  className="fable-btn fable-btn-ghost min-h-0 p-2"
                 >
-                  Install Fable on Your Device
-                </h2>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowGuideModal(false)}
-                aria-label="Close install instructions"
-                className="fable-btn fable-btn-ghost p-2"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-
-            <div className="mt-5 space-y-4 text-sm text-[var(--text-secondary)]">
-              <div className="rounded-[var(--radius-md)] bg-[var(--surface-raised)] p-4">
-                <p className="font-semibold text-[var(--text-primary)]">
-                  iPhone & iPad (Safari)
-                </p>
-                <ol className="mt-2 list-decimal space-y-1.5 pl-5">
-                  <li>
-                    Tap the <strong className="text-[var(--text-primary)]">Share</strong> icon{' '}
-                    <Share className="inline h-3.5 w-3.5 text-[var(--text-link)]" /> in Safari.
-                  </li>
-                  <li>
-                    Choose{' '}
-                    <strong className="text-[var(--text-primary)]">Add to Home Screen</strong>.
-                  </li>
-                  <li>
-                    Tap <strong className="text-[var(--text-primary)]">Add</strong> for fullscreen
-                    offline reading.
-                  </li>
-                </ol>
+                  <X className="h-4 w-4" />
+                </button>
               </div>
 
-              <div className="rounded-[var(--radius-md)] bg-[var(--surface-raised)] p-4">
-                <p className="font-semibold text-[var(--text-primary)]">
-                  Android (Chrome, Edge, Firefox)
-                </p>
-                <ol className="mt-2 list-decimal space-y-1.5 pl-5">
-                  <li>
-                    Open the browser menu in the top-right corner.
-                  </li>
-                  <li>
-                    Tap <strong className="text-[var(--text-primary)]">Install app</strong> or{' '}
-                    <strong className="text-[var(--text-primary)]">Add to Home screen</strong>.
-                  </li>
-                </ol>
+              <div className="mt-5 space-y-4 text-sm text-[var(--text-secondary)]">
+                <div className="rounded-[var(--radius-md)] bg-[var(--surface-raised)] p-4">
+                  <p className="font-semibold text-[var(--text-primary)]">
+                    iPhone & iPad (Safari)
+                  </p>
+                  <ol className="mt-2 list-decimal space-y-1.5 pl-5">
+                    <li>
+                      Tap <strong className="text-[var(--text-primary)]">Share</strong>{' '}
+                      <Share className="inline h-3.5 w-3.5 text-[var(--text-link)]" /> in Safari.
+                    </li>
+                    <li>
+                      Tap{' '}
+                      <strong className="text-[var(--text-primary)]">Add to Home Screen</strong>.
+                    </li>
+                    <li>
+                      Tap <strong className="text-[var(--text-primary)]">Add</strong>.
+                    </li>
+                  </ol>
+                </div>
+
+                <div className="rounded-[var(--radius-md)] bg-[var(--surface-raised)] p-4">
+                  <p className="font-semibold text-[var(--text-primary)]">
+                    Android (Chrome, Edge, Firefox)
+                  </p>
+                  <ol className="mt-2 list-decimal space-y-1.5 pl-5">
+                    <li>Open the browser menu in the top-right.</li>
+                    <li>
+                      Tap <strong className="text-[var(--text-primary)]">Install app</strong> or{' '}
+                      <strong className="text-[var(--text-primary)]">Add to Home screen</strong>.
+                    </li>
+                  </ol>
+                </div>
+              </div>
+
+              <div className="mt-6 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setShowGuideModal(false)}
+                  className="fable-btn fable-btn-primary"
+                >
+                  Done
+                </button>
               </div>
             </div>
-
-            <div className="mt-6 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setShowGuideModal(false)}
-                className="fable-btn fable-btn-primary"
-              >
-                Done
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </>
   );
 }
