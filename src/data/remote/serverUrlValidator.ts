@@ -1,4 +1,4 @@
-export const DEFAULT_HOSTED_API_BASE_URL = 'https://fable-api-cbo8.onrender.com/api/v1/';
+export const DEFAULT_HOSTED_API_BASE_URL = 'https://fable-api-eosin.vercel.app/api/v1/';
 export const SAME_ORIGIN_PROXY_API_BASE_URL = '/api/v1/';
 
 export interface ServerUrlValidationResult {

@@ -13,7 +13,7 @@ export async function onRequest(context: {
 }): Promise<Response> {
   const backendOrigin =
     context.env?.FABLE_BACKEND_ORIGIN?.replace(/\/+$/, '') ||
-    'https://fable-api-cbo8.onrender.com';
+    'https://fable-api-eosin.vercel.app';
 
   const incomingUrl = new URL(context.request.url);
   const targetUrl = `${backendOrigin}${incomingUrl.pathname}${incomingUrl.search}`;

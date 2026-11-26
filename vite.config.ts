@@ -77,7 +77,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api/v1': {
-        target: 'https://fable-api-cbo8.onrender.com',
+        target: 'https://fable-api-eosin.vercel.app',
         changeOrigin: true,
         secure: true,
       },
