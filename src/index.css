@@ -1,0 +1,366 @@
+@import "tailwindcss";
+
+:root {
+  /* Typography families: Google Sans across UI */
+  --font-sans: "Google Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: "Google Sans", Georgia, Cambria, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type scale */
+  --text-2xs: 0.625rem;
+  --text-xxs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-display-sm: 2.25rem;
+  --text-display-lg: 3rem;
+
+  /* Radii & focus */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-pill: 9999px;
+  --focus-width: 2px;
+
+  /* Motion */
+  --duration-fast: 150ms;
+  --duration-instant: 0.01ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Semantic Light Monochromatic Palette */
+  --surface-page: #FAFAFA;
+  --surface-card: #FDFDFD;
+  --surface-raised: #F4F4F5;
+  --surface-sunken: #F4F4F5;
+  --surface-backdrop: rgba(24, 24, 27, 0.54);
+
+  --text-primary: #18181B;
+  --text-secondary: #52525B;
+  --text-tertiary: #71717A;
+  --text-on-action: #FAFAFA;
+  --text-link: #18181B;
+
+  --border-subtle: #E4E4E7;
+  --border-strong: #71717A;
+  --border-focus: #18181B;
+
+  /* Intent Actions (Light Monochromatic) */
+  --action-primary: #27272A;
+  --action-primary-hover: #18181B;
+  --action-primary-active: #0F0F11;
+  --action-primary-tint: rgba(24, 24, 27, 0.06);
+
+  --action-secondary: #F4F4F5;
+  --action-secondary-hover: #E4E4E7;
+
+  --action-destructive: #B82E2E;
+  --action-destructive-hover: #962323;
+  --action-destructive-tint: rgba(184, 46, 46, 0.08);
+
+  /* Monochromatic Status & Book Spine Tones */
+  --status-success-bg: #F4F4F5;
+  --status-success-text: #27272A;
+  --status-success-border: #D4D4D8;
+
+  --status-warning-bg: #F4F4F5;
+  --status-warning-text: #3F3F46;
+  --status-warning-border: #D4D4D8;
+
+  --spine-forest: #27272A;
+  --spine-terracotta: #18181B;
+  --spine-slate: #3F3F46;
+  --spine-plum: #52525B;
+
+  /* Reader Surface Tokens */
+  --reader-paper-bg: #FAFAFA;
+  --reader-paper-ink: #18181B;
+  --reader-paper-muted: #52525B;
+  --reader-paper-border: #E4E4E7;
+
+  --reader-sepia-bg: #F4EFE6;
+  --reader-sepia-ink: #27241E;
+  --reader-sepia-muted: #5C5549;
+  --reader-sepia-border: #DFD6C5;
+
+  --reader-night-bg: #111113;
+  --reader-night-ink: #EAEAEF;
+  --reader-night-muted: #A1A1AA;
+  --reader-night-border: #27272A;
+
+  /* Elevation */
+  --shadow-raised: 0 2px 14px rgba(24, 24, 27, 0.06);
+  --shadow-modal: 0 16px 48px rgba(15, 15, 17, 0.24);
+}
+
+.dark,
+[data-theme="dark"] {
+  --surface-page: #0F0F11;
+  --surface-card: #18181B;
+  --surface-raised: #27272A;
+  --surface-sunken: #18181B;
+  --surface-backdrop: rgba(9, 9, 11, 0.76);
+
+  --text-primary: #F4F4F5;
+  --text-secondary: #D4D4D8;
+  --text-tertiary: #A1A1AA;
+  --text-on-action: #18181B;
+  --text-link: #E4E4E7;
+
+  --border-subtle: #27272A;
+  --border-strong: #A1A1AA;
+  --border-focus: #E4E4E7;
+
+  --action-primary: #E4E4E7;
+  --action-primary-hover: #F4F4F5;
+  --action-primary-active: #FAFAFA;
+  --action-primary-tint: rgba(244, 244, 245, 0.08);
+
+  --action-secondary: #27272A;
+  --action-secondary-hover: #3F3F46;
+
+  --action-destructive: #B82E2E;
+  --action-destructive-hover: #962323;
+  --action-destructive-tint: rgba(245, 194, 194, 0.12);
+
+  --status-success-bg: #27272A;
+  --status-success-text: #F4F4F5;
+  --status-success-border: #3F3F46;
+
+  --status-warning-bg: #27272A;
+  --status-warning-text: #E4E4E7;
+  --status-warning-border: #3F3F46;
+
+  --shadow-raised: 0 2px 18px rgba(9, 9, 11, 0.45);
+  --shadow-modal: 0 20px 56px rgba(9, 9, 11, 0.72);
+}
+
+html,
+body {
+  background-color: var(--surface-page);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-editorial {
+  font-family: var(--font-sans);
+  letter-spacing: -0.015em;
+}
+
+.font-prose {
+  font-family: var(--font-serif);
+}
+
+.font-code {
+  font-family: var(--font-mono);
+}
+
+.display-headline {
+  font-family: var(--font-sans);
+  font-size: var(--text-display-sm);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  max-width: 22ch;
+}
+
+@media (min-width: 640px) {
+  .display-headline {
+    font-size: var(--text-display-lg);
+  }
+}
+
+.prose-measure {
+  max-width: 65ch;
+}
+
+/* Interactive Component System with all 8 states */
+.fable-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 1.125rem;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.fable-btn:focus-visible {
+  outline: var(--focus-width) solid var(--border-focus);
+  outline-offset: var(--focus-width);
+}
+
+.fable-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+@keyframes fableModalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fable-modal-enter {
+  animation: fableModalIn var(--duration-fast) var(--ease-out);
+}
+
+.fable-btn:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.fable-btn-primary {
+  background-color: var(--action-primary);
+  color: var(--text-on-action);
+}
+
+.fable-btn-primary:hover:not(:disabled) {
+  background-color: var(--action-primary-hover);
+}
+
+.fable-btn-primary:active:not(:disabled) {
+  background-color: var(--action-primary-active);
+}
+
+.fable-btn-secondary {
+  background-color: var(--action-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+.fable-btn-secondary:hover:not(:disabled) {
+  background-color: var(--action-secondary-hover);
+  border-color: var(--border-strong);
+}
+
+.fable-btn-ghost {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+
+.fable-btn-ghost:hover:not(:disabled) {
+  background-color: var(--action-secondary);
+  color: var(--text-primary);
+}
+
+.fable-btn-destructive {
+  background-color: var(--action-destructive);
+  color: var(--text-on-action);
+}
+
+.fable-btn-destructive:hover:not(:disabled) {
+  background-color: var(--action-destructive-hover);
+}
+
+.fable-input {
+  width: 100%;
+  min-height: 2.75rem;
+  background-color: var(--surface-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 0.625rem 0.875rem;
+  font-size: var(--text-sm);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.fable-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.fable-input:hover:not(:disabled) {
+  border-color: var(--text-primary);
+}
+
+.fable-input:focus-visible {
+  outline: var(--focus-width) solid var(--border-focus);
+  outline-offset: 1px;
+  border-color: var(--border-focus);
+}
+
+.fable-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 2.25rem;
+  padding: 0.375rem 0.875rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--surface-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.fable-chip:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.fable-chip:focus-visible {
+  outline: var(--focus-width) solid var(--border-focus);
+  outline-offset: var(--focus-width);
+}
+
+.fable-chip[aria-pressed="true"],
+.fable-chip-selected {
+  background-color: var(--text-primary);
+  border-color: var(--text-primary);
+  color: var(--surface-page);
+}
+
+.fable-card {
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.fable-card-interactive {
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.fable-card-interactive:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-raised);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: var(--duration-instant) !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: var(--duration-instant) !important;
+    scroll-behavior: auto !important;
+  }
+}

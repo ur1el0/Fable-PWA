@@ -1,0 +1,81 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Fable Light Monochromatic 3-tier DTCG tokens: Primitive -> Semantic -> Component, with dark-at-semantic overrides.",
+  "primitive": {
+    "neutral": {
+      "50":  { "$type": "color", "$value": "#FAFAFA" },
+      "100": { "$type": "color", "$value": "#F4F4F5" },
+      "200": { "$type": "color", "$value": "#E4E4E7" },
+      "300": { "$type": "color", "$value": "#D4D4D8" },
+      "400": { "$type": "color", "$value": "#A1A1AA" },
+      "500": { "$type": "color", "$value": "#71717A" },
+      "600": { "$type": "color", "$value": "#52525B" },
+      "700": { "$type": "color", "$value": "#3F3F46" },
+      "800": { "$type": "color", "$value": "#27272A" },
+      "900": { "$type": "color", "$value": "#18181B" },
+      "950": { "$type": "color", "$value": "#0F0F11" }
+    },
+    "offwhite": { "$type": "color", "$value": "#FDFDFD" },
+    "crimson": {
+      "600": { "$type": "color", "$value": "#B82E2E" },
+      "700": { "$type": "color", "$value": "#962323" }
+    }
+  },
+  "semantic": {
+    "action": {
+      "primary":           { "$type": "color", "$value": "{primitive.neutral.800}" },
+      "primary-hover":     { "$type": "color", "$value": "{primitive.neutral.900}" },
+      "primary-active":    { "$type": "color", "$value": "{primitive.neutral.950}" },
+      "secondary":         { "$type": "color", "$value": "{primitive.neutral.100}" },
+      "secondary-hover":   { "$type": "color", "$value": "{primitive.neutral.200}" },
+      "destructive":       { "$type": "color", "$value": "{primitive.crimson.600}" },
+      "destructive-hover": { "$type": "color", "$value": "{primitive.crimson.700}" }
+    },
+    "text": {
+      "primary":   { "$type": "color", "$value": "{primitive.neutral.900}" },
+      "secondary": { "$type": "color", "$value": "{primitive.neutral.600}" },
+      "tertiary":  { "$type": "color", "$value": "{primitive.neutral.500}" },
+      "on-action": { "$type": "color", "$value": "{primitive.neutral.50}" },
+      "link":      { "$type": "color", "$value": "{primitive.neutral.800}" }
+    },
+    "surface": {
+      "page":   { "$type": "color", "$value": "{primitive.neutral.50}" },
+      "card":   { "$type": "color", "$value": "{primitive.offwhite}" },
+      "raised": { "$type": "color", "$value": "{primitive.neutral.100}" },
+      "sunken": { "$type": "color", "$value": "{primitive.neutral.100}" }
+    },
+    "border": {
+      "default": { "$type": "color", "$value": "{primitive.neutral.200}" },
+      "strong":  { "$type": "color", "$value": "{primitive.neutral.500}" },
+      "focus":   { "$type": "color", "$value": "{primitive.neutral.900}" }
+    }
+  },
+  "dark": {
+    "text": {
+      "primary":   { "$type": "color", "$value": "{primitive.neutral.100}" },
+      "secondary": { "$type": "color", "$value": "{primitive.neutral.300}" },
+      "tertiary":  { "$type": "color", "$value": "{primitive.neutral.400}" },
+      "on-action": { "$type": "color", "$value": "{primitive.neutral.900}" },
+      "link":      { "$type": "color", "$value": "{primitive.neutral.200}" }
+    },
+    "surface": {
+      "page":   { "$type": "color", "$value": "{primitive.neutral.950}" },
+      "card":   { "$type": "color", "$value": "{primitive.neutral.900}" },
+      "raised": { "$type": "color", "$value": "{primitive.neutral.800}" },
+      "sunken": { "$type": "color", "$value": "{primitive.neutral.900}" }
+    },
+    "border": {
+      "default": { "$type": "color", "$value": "{primitive.neutral.800}" },
+      "strong":  { "$type": "color", "$value": "{primitive.neutral.400}" },
+      "focus":   { "$type": "color", "$value": "{primitive.neutral.200}" }
+    },
+    "action": {
+      "primary":           { "$type": "color", "$value": "{primitive.neutral.200}" },
+      "primary-hover":     { "$type": "color", "$value": "{primitive.neutral.100}" },
+      "secondary":         { "$type": "color", "$value": "{primitive.neutral.800}" },
+      "secondary-hover":   { "$type": "color", "$value": "{primitive.neutral.700}" },
+      "destructive":       { "$type": "color", "$value": "{primitive.crimson.600}" },
+      "destructive-hover": { "$type": "color", "$value": "{primitive.crimson.700}" }
+    }
+  }
+}

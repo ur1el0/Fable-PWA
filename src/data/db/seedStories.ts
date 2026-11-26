@@ -1,0 +1,246 @@
+import type { Story } from '../../domain/models';
+
+export const SEED_STORIES: Story[] = [
+  {
+    id: 'fable-glass-conservatory',
+    ownerUserId: null,
+    title: 'The Glass Conservatory',
+    author: 'Elena Vance',
+    authorBio: 'Elena writes atmospheric fiction about memory, architecture, and coastal towns.',
+    genre: 'Literary Fiction',
+    readTimeMinutes: 14,
+    rating: 4.9,
+    synopsis:
+      'On a cliff above a tidal harbor, a botanist inherits a glass greenhouse where every dormant seed blooms with a forgotten memory of the town below.',
+    accentHex: '#3949AB',
+    featuredRank: 1,
+    isBookmarked: true,
+    isCompleted: false,
+    readingProgress: 0.35,
+    lastReadChapterIndex: 0,
+    provider: 'FABLE',
+    contentFormat: 'PROSE',
+    coverImageUrl: null,
+    externalId: null,
+    sourceUrl: null,
+    chapters: [
+      {
+        id: 'fable-glass-conservatory-ch-0',
+        index: 0,
+        title: 'Chapter 1: Salt on the Lantern Glass',
+        readTimeMinutes: 7,
+        content: [
+          'The key to the upper greenhouse had been cast from brass so soft that fifty winters of harbor fog had rounded its teeth into gentle waves. Clara turned it twice in the lock before the latch gave way with a low metallic sigh.',
+          'Inside, the air smelled of cedar benches, damp slate, and dried rosemary. Moonlight fell through the ribbed iron dome in long silver panes, illuminating rows of terracotta pots labeled in her grandfather’s copperplate script.',
+          'At the center of the propagating table sat a single glass bell jar. Beneath it rested a seed pod no larger than a walnut, veined with faint indigo threads that pulsed softly whenever the surf struck the sea wall below.',
+          'She lifted the bell jar by its fluted knob. A draft of warm air rose from the soil, carrying the unmistakable sound of harbor bells ringing across water that had been drained and paved over forty years ago.',
+        ].join('\n\n'),
+        pages: [],
+        pageCount: 0,
+      },
+      {
+        id: 'fable-glass-conservatory-ch-1',
+        index: 1,
+        title: 'Chapter 2: Ledger of Tides',
+        readTimeMinutes: 7,
+        content: [
+          'In the drawer beneath the potting bench Clara found a leather-bound ledger stamped with the years 1954 through 1982. Every entry paired a botanical binomial with a name from the harbor census and a barometric reading.',
+          '“Noctiflora maritima,” read an entry dated November twelfth. “Collected during the king tide. Retains the acoustic impression of the northern breakwater prior to the storm.”',
+          'Clara carried the ledger to the lantern hook by the western casement. Outside, the lighthouse beam swept across the dark bay in measured four-second intervals, briefly turning every pane of the conservatory into hammered gold.',
+        ].join('\n\n'),
+        pages: [],
+        pageCount: 0,
+      },
+    ],
+  },
+  {
+    id: 'fable-clockwork-cartographer',
+    ownerUserId: null,
+    title: 'The Clockwork Cartographer',
+    author: 'Julian Mercer',
+    authorBio: 'Julian explores speculative cities, mechanical instruments, and quiet mysteries.',
+    genre: 'Speculative',
+    readTimeMinutes: 18,
+    rating: 4.8,
+    synopsis:
+      'In a vertical city suspended between cloud strata, an apprentice surveyor discovers that the brass astrolabes used to chart the upper bridges are quietly rewriting the streets overnight.',
+    accentHex: '#00695C',
+    featuredRank: 2,
+    isBookmarked: false,
+    isCompleted: false,
+    readingProgress: 0,
+    lastReadChapterIndex: 0,
+    provider: 'FABLE',
+    contentFormat: 'PROSE',
+    coverImageUrl: null,
+    externalId: null,
+    sourceUrl: null,
+    chapters: [
+      {
+        id: 'fable-clockwork-cartographer-ch-0',
+        index: 0,
+        title: 'Chapter 1: Meridian of Brass',
+        readTimeMinutes: 9,
+        content: [
+          'Every morning at six, before the cable trams began their ascent through the lower cloud bank, Soren calibrated the transit compass on the parapet of Seventh Pier.',
+          'The city of Veridian did not rest on bedrock; its districts hung from counterweighted basalt pylons connected by arched truss bridges that shifted three inches to the east whenever the trade winds turned.',
+          'On Tuesday, however, Soren’s vernier scale showed that Lantern Alley had moved forty feet north, taking a cobbler’s shop, a fountain, and three chestnut trees with it without cracking a single cobblestone.',
+        ].join('\n\n'),
+        pages: [],
+        pageCount: 0,
+      },
+      {
+        id: 'fable-clockwork-cartographer-ch-1',
+        index: 1,
+        title: 'Chapter 2: The Escapement Vault',
+        readTimeMinutes: 9,
+        content: [
+          'Beneath the Guildhall of Surveyors, the master pendulum swung inside a evacuated cylinder of leaded crystal. Around its base lay concentric brass rings engraved with every street name in the upper and lower wards.',
+          'Soren knelt beside the index gear with his pocket loupe. Someone had fitted an auxiliary pinion of blued steel between the third and fourth quadrants, advancing the western bridges by one tooth at midnight.',
+        ].join('\n\n'),
+        pages: [],
+        pageCount: 0,
+      },
+    ],
+  },
+  {
+    id: 'se-pride-and-prejudice',
+    ownerUserId: null,
+    title: 'Pride and Prejudice',
+    author: 'Jane Austen',
+    authorBio: 'Curated typography edition via Standard Ebooks public domain collection.',
+    genre: 'Classic',
+    readTimeMinutes: 45,
+    rating: 4.95,
+    synopsis:
+      'Elizabeth Bennet navigates manners, upbringing, morality, and marriage in early nineteenth-century England in this carefully typeset public-domain edition.',
+    accentHex: '#8D4E35',
+    featuredRank: 3,
+    isBookmarked: true,
+    isCompleted: false,
+    readingProgress: 0,
+    lastReadChapterIndex: 0,
+    provider: 'STANDARD_EBOOKS',
+    contentFormat: 'PROSE',
+    coverImageUrl: null,
+    externalId: 'jane-austen/pride-and-prejudice',
+    sourceUrl: 'https://standardebooks.org/ebooks/jane-austen/pride-and-prejudice',
+    chapters: [
+      {
+        id: 'se-pride-and-prejudice-ch-0',
+        index: 0,
+        title: 'Chapter I',
+        readTimeMinutes: 8,
+        content: [
+          'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.',
+          'However little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families, that he is considered the rightful property of some one or other of their daughters.',
+          '“My dear Mr. Bennet,” said his lady to him one day, “have you heard that Netherfield Park is let at last?” Mr. Bennet replied that he had not.',
+        ].join('\n\n'),
+        pages: [],
+        pageCount: 0,
+      },
+    ],
+  },
+  {
+    id: 'gutenberg-1342-odyssey-notes',
+    ownerUserId: null,
+    title: 'Letters from the Northern Observatory',
+    author: 'Arthur Pendelton',
+    authorBio: 'Public domain archival travelogue and astronomical correspondence.',
+    genre: 'Historical',
+    readTimeMinutes: 16,
+    rating: 4.7,
+    synopsis:
+      'An astronomer stationed above the Arctic Circle records auroral spectra, winter shipwrecks, and correspondence with naturalists across nineteenth-century Europe.',
+    accentHex: '#2E5A88',
+    featuredRank: null,
+    isBookmarked: false,
+    isCompleted: true,
+    readingProgress: 1.0,
+    lastReadChapterIndex: 0,
+    provider: 'GUTENBERG',
+    contentFormat: 'PROSE',
+    coverImageUrl: null,
+    externalId: '84920',
+    sourceUrl: 'https://www.gutenberg.org',
+    chapters: [
+      {
+        id: 'gutenberg-1342-odyssey-notes-ch-0',
+        index: 0,
+        title: 'Letter I: First Frost at Tromsø',
+        readTimeMinutes: 16,
+        content: [
+          'October 14th: We finished mounting the equatorial refractor just as the last steamer departed the fjord for the south. From this ridge the sea appears as dark as polished obsidian.',
+          'At nine in the evening the first curtain of green light unrolled from the zenith, so bright that I could read the divisions on my brass micrometer without a lantern.',
+        ].join('\n\n'),
+        pages: [],
+        pageCount: 0,
+      },
+    ],
+  },
+  {
+    id: 'mangadex-starlight-express-demo',
+    ownerUserId: null,
+    title: 'Aether Rail: Cloudline Chronicles',
+    author: 'K. Takahashi',
+    authorBio: 'Sequential art series featured for Webtoon and Manga reader layouts.',
+    genre: 'Fantasy',
+    readTimeMinutes: 10,
+    rating: 4.85,
+    synopsis:
+      'A courier aboard a sky-rail locomotive delivers parcels between floating archipelagos in this illustrated sequential comic preview.',
+    accentHex: '#5C6BC0',
+    featuredRank: 4,
+    isBookmarked: false,
+    isCompleted: false,
+    readingProgress: 0,
+    lastReadChapterIndex: 0,
+    provider: 'MANGADEX',
+    contentFormat: 'COMIC',
+    coverImageUrl: null,
+    externalId: 'aether-rail-demo',
+    sourceUrl: 'https://mangadex.org',
+    chapters: [
+      {
+        id: 'mangadex-starlight-express-ch-0',
+        index: 0,
+        title: 'Episode 1: Departure at Platform Nine-Aloft',
+        readTimeMinutes: 10,
+        content: '',
+        pageCount: 3,
+        pages: [
+          {
+            index: 0,
+            imageUrl:
+              'data:image/svg+xml;utf8,' +
+              encodeURIComponent(
+                `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1120" width="800" height="1120"><rect width="800" height="1120" fill="#101626"/><rect x="48" y="48" width="704" height="480" rx="18" fill="#1C2847" stroke="#7890FF" stroke-width="4"/><circle cx="620" cy="170" r="56" fill="#F6D365"/><path d="M48 440 Q260 320 480 410 T752 380 L752 528 L48 528 Z" fill="#2A3C68"/><text x="90" y="130" fill="#F1F5F9" font-family="sans-serif" font-size="30" font-weight="bold">AETHER RAIL · EPISODE 1</text><text x="90" y="175" fill="#A5B4C8" font-family="sans-serif" font-size="20">Panel 1 · Sky-Station Dawn</text><rect x="48" y="564" width="704" height="508" rx="18" fill="#162038" stroke="#4E67B8" stroke-width="4"/><rect x="96" y="620" width="608" height="110" rx="16" fill="#FBF8F3"/><text x="128" y="670" fill="#18181B" font-family="serif" font-size="24">“All pressure gauges green. Uncouple the mooring cables!”</text><text x="128" y="706" fill="#52525B" font-family="sans-serif" font-size="18">Conductor Mira, Platform 9-Aloft</text><text x="400" y="1030" text-anchor="middle" fill="#7890FF" font-family="monospace" font-size="20">PAGE 1 / 3 · PINCH OR DOUBLE-TAP TO ZOOM</text></svg>`
+              ),
+            width: 800,
+            height: 1120,
+          },
+          {
+            index: 1,
+            imageUrl:
+              'data:image/svg+xml;utf8,' +
+              encodeURIComponent(
+                `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1120" width="800" height="1120"><rect width="800" height="1120" fill="#0E1726"/><rect x="48" y="48" width="336" height="500" rx="16" fill="#1D2D44" stroke="#64B5F6" stroke-width="4"/><rect x="416" y="48" width="336" height="500" rx="16" fill="#19273C" stroke="#64B5F6" stroke-width="4"/><text x="80" y="120" fill="#F1F5F9" font-family="sans-serif" font-size="22" font-weight="bold">Panel 2A · Viaduct</text><text x="448" y="120" fill="#F1F5F9" font-family="sans-serif" font-size="22" font-weight="bold">Panel 2B · Cloud Sea</text><rect x="48" y="580" width="704" height="492" rx="18" fill="#1B263B" stroke="#7890FF" stroke-width="4"/><rect x="100" y="640" width="600" height="120" rx="16" fill="#FBF8F3"/><text x="132" y="694" fill="#18181B" font-family="serif" font-size="24">“Next stop: The Glass Archipelago, three hundred leagues east.”</text><text x="400" y="1030" text-anchor="middle" fill="#64B5F6" font-family="monospace" font-size="20">PAGE 2 / 3 · WEBTOON &amp; MANGA MODES</text></svg>`
+              ),
+            width: 800,
+            height: 1120,
+          },
+          {
+            index: 2,
+            imageUrl:
+              'data:image/svg+xml;utf8,' +
+              encodeURIComponent(
+                `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1120" width="800" height="1120"><rect width="800" height="1120" fill="#121629"/><rect x="48" y="48" width="704" height="1024" rx="22" fill="#1E2542" stroke="#D49B27" stroke-width="4"/><circle cx="400" cy="440" r="170" fill="#D49B27" opacity="0.2"/><circle cx="400" cy="440" r="110" fill="#F6D365"/><text x="400" y="740" text-anchor="middle" fill="#F1F5F9" font-family="serif" font-size="34" font-weight="bold">End of Episode 1</text><text x="400" y="790" text-anchor="middle" fill="#A5B4C8" font-family="sans-serif" font-size="22">Explore MangaDex in the Explore tab for live series</text><text x="400" y="1020" text-anchor="middle" fill="#D49B27" font-family="monospace" font-size="20">PAGE 3 / 3</text></svg>`
+              ),
+            width: 800,
+            height: 1120,
+          },
+        ],
+      },
+    ],
+  },
+];
