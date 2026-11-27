@@ -292,7 +292,7 @@ export function StoryReaderScreen({
 
   return (
     <div
-      className="relative min-h-[calc(100vh-2rem)] rounded-[var(--radius-lg)] border"
+      className="relative min-h-screen sm:min-h-[calc(100vh-3rem)] sm:rounded-[var(--radius-lg)] sm:border"
       style={{
         backgroundColor: surface.bg,
         color: surface.ink,
@@ -309,23 +309,23 @@ export function StoryReaderScreen({
 
       {/* Minimalist Reader Top Bar */}
       <header
-        className="sticky top-0 z-30 flex flex-wrap items-center justify-between gap-2 rounded-t-[var(--radius-lg)] border-b px-4 py-3 backdrop-blur-sm sm:px-6"
+        className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b px-4 py-3 backdrop-blur-md sm:rounded-t-[var(--radius-lg)] sm:px-6"
         style={{
           backgroundColor: surface.bg,
           borderColor: surface.border,
         }}
       >
-        <div className="flex min-w-0 flex-1 items-center gap-3">
+        <div className="flex min-w-0 items-center gap-3">
           <button
             type="button"
             onClick={navigateBack}
-            className="fable-btn min-h-9 shrink-0 border px-3 py-1.5 text-xs"
-            style={{ borderColor: surface.border, color: surface.ink }}
+            className="fable-btn min-h-10 shrink-0 px-2.5 py-2 text-xs hover:bg-[var(--action-primary-tint)]"
+            style={{ color: surface.ink }}
           >
-            <ArrowLeft className="h-3.5 w-3.5" />
+            <ArrowLeft className="h-4 w-4" />
             <span>Back</span>
           </button>
-          <div className="min-w-0">
+          <div className="hidden min-w-0 sm:block">
             <p className="truncate font-editorial text-xs font-bold sm:text-sm">
               {story.title}
             </p>
@@ -335,7 +335,7 @@ export function StoryReaderScreen({
           </div>
         </div>
 
-        <div className="flex shrink-0 items-center gap-1.5">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           {story.contentFormat === 'COMIC' && (
             <button
               type="button"
@@ -360,8 +360,8 @@ export function StoryReaderScreen({
                 type="button"
                 onClick={() => setShowSearchSheet(true)}
                 aria-label="Search inside book"
-                className="fable-btn min-h-9 border p-2"
-                style={{ borderColor: surface.border, color: surface.ink }}
+                className="fable-btn min-h-10 min-w-10 p-2.5 hover:bg-[var(--action-primary-tint)]"
+                style={{ color: surface.ink }}
               >
                 <Search className="h-4 w-4" />
               </button>
@@ -369,8 +369,8 @@ export function StoryReaderScreen({
                 type="button"
                 onClick={() => setShowHighlightsSheet(true)}
                 aria-label="Saved highlights"
-                className="fable-btn relative min-h-9 border p-2"
-                style={{ borderColor: surface.border, color: surface.ink }}
+                className="fable-btn relative min-h-10 min-w-10 p-2.5 hover:bg-[var(--action-primary-tint)]"
+                style={{ color: surface.ink }}
               >
                 <Highlighter className="h-4 w-4" />
                 {highlights.length > 0 && (
@@ -392,8 +392,8 @@ export function StoryReaderScreen({
             type="button"
             onClick={() => setShowChaptersSheet(true)}
             aria-label="Chapters"
-            className="fable-btn min-h-9 border p-2"
-            style={{ borderColor: surface.border, color: surface.ink }}
+            className="fable-btn min-h-10 min-w-10 p-2.5 hover:bg-[var(--action-primary-tint)]"
+            style={{ color: surface.ink }}
           >
             <List className="h-4 w-4" />
           </button>
@@ -402,7 +402,7 @@ export function StoryReaderScreen({
             type="button"
             onClick={() => setShowDisplaySheet(true)}
             aria-label="Display options"
-            className="fable-btn min-h-9 border px-3 py-1.5 text-xs"
+            className="fable-btn min-h-10 border px-3 py-2 text-xs hover:bg-[var(--action-primary-tint)]"
             style={{ borderColor: surface.border, color: surface.ink }}
           >
             <SlidersHorizontal className="h-3.5 w-3.5" />
@@ -412,7 +412,10 @@ export function StoryReaderScreen({
       </header>
 
       {/* Reader Canvas */}
-      <div className="mx-auto max-w-2xl px-5 py-8 sm:px-10 sm:py-12">
+      <div
+        key={`${chapterIndex}-${pageIndex}-${prefs.layout}`}
+        className="fable-view-enter mx-auto max-w-2xl px-6 py-8 sm:px-10 sm:py-12"
+      >
         {story.contentFormat === 'COMIC' ? (
           <div className="space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-2 text-xs">

@@ -115,30 +115,43 @@ export function App() {
       )}
 
       <main
-        className={`mx-auto max-w-6xl px-4 pt-6 pb-28 sm:px-8 sm:pt-10 sm:pb-16 ${
-          isFullscreenReader ? 'max-w-4xl pt-3 pb-10' : ''
-        }`}
+        className={
+          isFullscreenReader
+            ? 'mx-auto w-full max-w-4xl px-0 pt-0 pb-0 sm:px-8 sm:pt-6 sm:pb-12'
+            : 'mx-auto max-w-6xl px-4 pt-6 pb-28 sm:px-8 sm:pt-10 sm:pb-16'
+        }
       >
-        {currentDest.type === 'STORY_DETAIL' ? (
-          <StoryDetailScreen storyId={currentDest.storyId} />
-        ) : currentDest.type === 'STORY_EDIT' ? (
-          <EditStoryScreen storyId={currentDest.storyId} />
-        ) : currentDest.type === 'STORY_READER' ? (
-          <StoryReaderScreen
-            storyId={currentDest.storyId}
-            initialChapterIndex={currentDest.chapterIndex}
-          />
-        ) : activeTab === 'LIBRARY' ? (
-          <LibraryScreen />
-        ) : activeTab === 'EXPLORE' ? (
-          <ExploreScreen />
-        ) : activeTab === 'SHELF' ? (
-          <ShelfScreen />
-        ) : activeTab === 'WRITE' ? (
-          <WriteScreen />
-        ) : (
-          <AccountScreen />
-        )}
+        <div
+          key={
+            currentDest.type === 'TAB_ROOT'
+              ? `tab-${activeTab}`
+              : `${currentDest.type}-${currentDest.storyId}-${
+                  currentDest.type === 'STORY_READER' ? currentDest.chapterIndex : 0
+                }`
+          }
+          className="fable-view-enter"
+        >
+          {currentDest.type === 'STORY_DETAIL' ? (
+            <StoryDetailScreen storyId={currentDest.storyId} />
+          ) : currentDest.type === 'STORY_EDIT' ? (
+            <EditStoryScreen storyId={currentDest.storyId} />
+          ) : currentDest.type === 'STORY_READER' ? (
+            <StoryReaderScreen
+              storyId={currentDest.storyId}
+              initialChapterIndex={currentDest.chapterIndex}
+            />
+          ) : activeTab === 'LIBRARY' ? (
+            <LibraryScreen />
+          ) : activeTab === 'EXPLORE' ? (
+            <ExploreScreen />
+          ) : activeTab === 'SHELF' ? (
+            <ShelfScreen />
+          ) : activeTab === 'WRITE' ? (
+            <WriteScreen />
+          ) : (
+            <AccountScreen />
+          )}
+        </div>
       </main>
 
       {statusMessage && (

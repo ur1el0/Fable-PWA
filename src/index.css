@@ -27,6 +27,7 @@
 
   /* Motion */
   --duration-fast: 150ms;
+  --duration-normal: 220ms;
   --duration-instant: 0.01ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -224,6 +225,34 @@ body {
 
 .fable-modal-enter {
   animation: fableModalIn var(--duration-fast) var(--ease-out);
+}
+
+@keyframes fableViewIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fable-view-enter {
+  animation: fableViewIn var(--duration-normal) var(--ease-out);
+}
+
+@keyframes fableBackdropIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fable-backdrop-enter {
+  animation: fableBackdropIn var(--duration-fast) var(--ease-out);
 }
 
 .fable-btn:disabled {

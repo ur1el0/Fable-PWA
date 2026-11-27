@@ -54,7 +54,7 @@ export function ReaderDisplaySheet({
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center"
+      className="fable-backdrop-enter fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center"
       style={{ backgroundColor: 'var(--surface-backdrop)' }}
     >
       <div
@@ -301,7 +301,7 @@ export function ReaderChaptersSheet({
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center"
+      className="fable-backdrop-enter fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center"
       style={{ backgroundColor: 'var(--surface-backdrop)' }}
     >
       <div
@@ -368,7 +368,7 @@ export function ReaderSearchSheet({
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center"
+      className="fable-backdrop-enter fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center"
       style={{ backgroundColor: 'var(--surface-backdrop)' }}
     >
       <div
@@ -472,7 +472,7 @@ export function ReaderHighlightsSheet({
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center"
+      className="fable-backdrop-enter fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center"
       style={{ backgroundColor: 'var(--surface-backdrop)' }}
     >
       <div
@@ -590,7 +590,7 @@ export function QuoteCardShareSheet({
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fable-backdrop-enter fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ backgroundColor: 'var(--surface-backdrop)' }}
     >
       <div
@@ -699,7 +699,7 @@ export function PassageHighlightSheet({
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center"
+      className="fable-backdrop-enter fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center"
       style={{ backgroundColor: 'var(--surface-backdrop)' }}
     >
       <div
