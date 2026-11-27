@@ -31,111 +31,118 @@
   --duration-instant: 0.01ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Semantic Light Monochromatic Palette */
-  --surface-page: #FAFAFA;
-  --surface-card: #FDFDFD;
-  --surface-raised: #F4F4F5;
-  --surface-sunken: #F4F4F5;
-  --surface-backdrop: rgba(24, 24, 27, 0.54);
+  /* Semantic Fable iOS Adaptive Palette (Light) */
+  --surface-page: #F7F8FA;
+  --surface-card: #FFFFFF;
+  --surface-raised: #EEF0F4;
+  --surface-sunken: #E8EBF0;
+  --surface-backdrop: rgba(11, 15, 23, 0.56);
+  --surface-glass: rgba(255, 255, 255, 0.78);
 
-  --text-primary: #18181B;
-  --text-secondary: #52525B;
-  --text-tertiary: #71717A;
-  --text-on-action: #FAFAFA;
-  --text-link: #18181B;
+  --text-primary: #111721;
+  --text-secondary: #4D596E;
+  --text-tertiary: #5A6474;
+  --text-on-action: #FFFFFF;
+  --text-link: #3B59F6;
 
-  --border-subtle: #E4E4E7;
-  --border-strong: #71717A;
-  --border-focus: #18181B;
+  --border-subtle: #E3E8ED;
+  --border-strong: #CBD5E1;
+  --border-focus: #3B59F6;
 
-  /* Intent Actions (Light Monochromatic) */
-  --action-primary: #27272A;
-  --action-primary-hover: #18181B;
-  --action-primary-active: #0F0F11;
-  --action-primary-tint: rgba(24, 24, 27, 0.06);
+  /* Intent Actions (Electric Indigo from FableTheme.swift) */
+  --action-primary: #3B59F6;
+  --action-primary-hover: #2E4AE0;
+  --action-primary-active: #253EC9;
+  --action-primary-tint: rgba(59, 89, 246, 0.12);
+  --brand-accent: #7D8CFA;
+  --brand-secondary: #1E293B;
 
-  --action-secondary: #F4F4F5;
-  --action-secondary-hover: #E4E4E7;
+  --action-secondary: #E8EBF0;
+  --action-secondary-hover: #DDE2EA;
 
-  --action-destructive: #B82E2E;
-  --action-destructive-hover: #962323;
-  --action-destructive-tint: rgba(184, 46, 46, 0.08);
+  --action-destructive: #DC2626;
+  --action-destructive-hover: #B91C1C;
+  --action-destructive-tint: rgba(220, 38, 38, 0.10);
 
-  /* Monochromatic Status & Book Spine Tones */
-  --status-success-bg: #F4F4F5;
-  --status-success-text: #27272A;
-  --status-success-border: #D4D4D8;
+  /* Status & Book Spine Tones */
+  --status-success-bg: rgba(22, 163, 74, 0.12);
+  --status-success-text: #15803D;
+  --status-success-border: rgba(22, 163, 74, 0.25);
 
-  --status-warning-bg: #F4F4F5;
-  --status-warning-text: #3F3F46;
-  --status-warning-border: #D4D4D8;
+  --status-warning-bg: rgba(217, 119, 6, 0.12);
+  --status-warning-text: #B45309;
+  --status-warning-border: rgba(217, 119, 6, 0.25);
 
-  --spine-forest: #27272A;
-  --spine-terracotta: #18181B;
-  --spine-slate: #3F3F46;
-  --spine-plum: #52525B;
+  --spine-forest: #1E293B;
+  --spine-terracotta: #3B59F6;
+  --spine-slate: #334155;
+  --spine-plum: #4F46E5;
 
   /* Reader Surface Tokens */
-  --reader-paper-bg: #FAFAFA;
-  --reader-paper-ink: #18181B;
-  --reader-paper-muted: #52525B;
-  --reader-paper-border: #E4E4E7;
+  --reader-paper-bg: #FAF5EB;
+  --reader-paper-ink: #2E2621;
+  --reader-paper-muted: #6E6259;
+  --reader-paper-border: #E8DFD1;
 
-  --reader-sepia-bg: #F4EFE6;
-  --reader-sepia-ink: #27241E;
-  --reader-sepia-muted: #5C5549;
-  --reader-sepia-border: #DFD6C5;
+  --reader-sepia-bg: #F5F2ED;
+  --reader-sepia-ink: #26262E;
+  --reader-sepia-muted: #5A5A66;
+  --reader-sepia-border: #E0DBD1;
 
-  --reader-night-bg: #111113;
-  --reader-night-ink: #EAEAEF;
-  --reader-night-muted: #A1A1AA;
-  --reader-night-border: #27272A;
+  --reader-night-bg: #141C24;
+  --reader-night-ink: #E6EDF2;
+  --reader-night-muted: #94A3B8;
+  --reader-night-border: #243044;
 
   /* Elevation */
-  --shadow-raised: 0 2px 14px rgba(24, 24, 27, 0.06);
-  --shadow-modal: 0 16px 48px rgba(15, 15, 17, 0.24);
+  --shadow-raised: 0 3px 12px rgba(17, 23, 33, 0.05);
+  --shadow-pill: 0 6px 24px rgba(17, 23, 33, 0.10), 0 1px 4px rgba(17, 23, 33, 0.04);
+  --shadow-modal: 0 18px 52px rgba(11, 15, 23, 0.24);
 }
 
 .dark,
 [data-theme="dark"] {
-  --surface-page: #0F0F11;
-  --surface-card: #18181B;
-  --surface-raised: #27272A;
-  --surface-sunken: #18181B;
-  --surface-backdrop: rgba(9, 9, 11, 0.76);
+  --surface-page: #0B0F17;
+  --surface-card: #111824;
+  --surface-raised: #141B26;
+  --surface-sunken: #1C2534;
+  --surface-backdrop: rgba(5, 8, 14, 0.78);
+  --surface-glass: rgba(17, 24, 36, 0.78);
 
-  --text-primary: #F4F4F5;
-  --text-secondary: #D4D4D8;
-  --text-tertiary: #A1A1AA;
-  --text-on-action: #18181B;
-  --text-link: #E4E4E7;
+  --text-primary: #F1F5F9;
+  --text-secondary: #B6C2D4;
+  --text-tertiary: #94A3B8;
+  --text-on-action: #FFFFFF;
+  --text-link: #8F9EFF;
 
-  --border-subtle: #27272A;
-  --border-strong: #A1A1AA;
-  --border-focus: #E4E4E7;
+  --border-subtle: #243044;
+  --border-strong: #334155;
+  --border-focus: #5C75FF;
 
-  --action-primary: #E4E4E7;
-  --action-primary-hover: #F4F4F5;
-  --action-primary-active: #FAFAFA;
-  --action-primary-tint: rgba(244, 244, 245, 0.08);
+  --action-primary: #5C75FF;
+  --action-primary-hover: #7086FF;
+  --action-primary-active: #4762F0;
+  --action-primary-tint: rgba(92, 117, 255, 0.16);
+  --brand-accent: #8F9EFF;
 
-  --action-secondary: #27272A;
-  --action-secondary-hover: #3F3F46;
+  --action-secondary: #1C2534;
+  --action-secondary-hover: #253042;
 
-  --action-destructive: #B82E2E;
-  --action-destructive-hover: #962323;
-  --action-destructive-tint: rgba(245, 194, 194, 0.12);
+  --action-destructive: #EF4444;
+  --action-destructive-hover: #DC2626;
+  --action-destructive-tint: rgba(239, 68, 68, 0.14);
 
-  --status-success-bg: #27272A;
-  --status-success-text: #F4F4F5;
-  --status-success-border: #3F3F46;
+  --status-success-bg: rgba(34, 197, 94, 0.15);
+  --status-success-text: #4ADE80;
+  --status-success-border: rgba(34, 197, 94, 0.28);
 
-  --status-warning-bg: #27272A;
-  --status-warning-text: #E4E4E7;
-  --status-warning-border: #3F3F46;
+  --status-warning-bg: rgba(245, 158, 11, 0.15);
+  --status-warning-text: #FBBF24;
+  --status-warning-border: rgba(245, 158, 11, 0.28);
 
-  --shadow-raised: 0 2px 18px rgba(9, 9, 11, 0.45);
-  --shadow-modal: 0 20px 56px rgba(9, 9, 11, 0.72);
+  --shadow-raised: 0 4px 20px rgba(5, 8, 14, 0.45);
+  --shadow-pill: 0 8px 28px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow-modal: 0 20px 56px rgba(5, 8, 14, 0.76);
 }
 
 html,
@@ -253,6 +260,12 @@ body {
 
 .fable-backdrop-enter {
   animation: fableBackdropIn var(--duration-fast) var(--ease-out);
+}
+
+.fable-glass {
+  background-color: var(--surface-glass);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
 }
 
 .fable-btn:disabled {

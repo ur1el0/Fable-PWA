@@ -21,9 +21,8 @@ import { StoryReaderScreen } from './ui/screens/StoryReaderScreen';
 const NAV_TABS: Array<{ id: FableTab; label: string; icon: any }> = [
   { id: 'LIBRARY', label: 'Library', icon: BookOpen },
   { id: 'EXPLORE', label: 'Explore', icon: Compass },
-  { id: 'SHELF', label: 'Shelf', icon: Bookmark },
   { id: 'WRITE', label: 'Write', icon: PenTool },
-  { id: 'ACCOUNT', label: 'Account', icon: User },
+  { id: 'SHELF', label: 'Shelf', icon: Bookmark },
 ];
 
 export function App() {
@@ -72,14 +71,17 @@ export function App() {
   return (
     <div className="min-h-screen bg-[var(--surface-page)] text-[var(--text-primary)]">
       {!isFullscreenReader && (
-        <header className="sticky top-0 z-30 border-b border-[var(--border-subtle)] bg-[var(--surface-page)]/95 backdrop-blur-sm">
-          <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3.5 sm:px-8">
+        <header className="fable-glass sticky top-0 z-30 border-b border-[var(--border-subtle)]">
+          <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-8">
             <button
               type="button"
               onClick={() => selectTab('LIBRARY')}
-              className="flex items-baseline gap-3 text-left focus-visible:outline-2 focus-visible:outline-[var(--border-focus)]"
+              className="flex items-center gap-2.5 text-left focus-visible:outline-2 focus-visible:outline-[var(--border-focus)]"
             >
-              <span className="font-editorial text-2xl font-bold tracking-tight text-[var(--text-primary)]">
+              <span className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] bg-[var(--action-primary)] text-[var(--text-on-action)] shadow-sm">
+                <BookOpen className="h-4 w-4" />
+              </span>
+              <span className="font-editorial text-xl font-bold tracking-tight text-[var(--text-primary)]">
                 Fable
               </span>
             </button>
@@ -94,9 +96,9 @@ export function App() {
                     type="button"
                     aria-current={active ? 'page' : undefined}
                     onClick={() => selectTab(tab.id)}
-                    className={`fable-btn px-3.5 py-2 text-xs ${
+                    className={`fable-btn rounded-[var(--radius-pill)] px-3.5 py-2 text-xs transition-all ${
                       active
-                        ? 'bg-[var(--surface-raised)] font-semibold text-[var(--text-primary)] border-[var(--border-strong)]'
+                        ? 'bg-[var(--action-primary-tint)] font-semibold text-[var(--action-primary)]'
                         : 'fable-btn-ghost'
                     }`}
                   >
@@ -109,6 +111,18 @@ export function App() {
 
             <div className="flex items-center gap-2">
               <PwaInstallAction />
+              <button
+                type="button"
+                onClick={() => selectTab('ACCOUNT')}
+                aria-label="Account and profile"
+                className={`flex h-9 w-9 items-center justify-center rounded-full border transition-all ${
+                  activeTab === 'ACCOUNT' && currentDest.type === 'TAB_ROOT'
+                    ? 'border-[var(--action-primary)] bg-[var(--action-primary-tint)] text-[var(--action-primary)]'
+                    : 'border-[var(--border-subtle)] bg-[var(--surface-card)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]'
+                }`}
+              >
+                <User className="h-4 w-4" />
+              </button>
             </div>
           </div>
         </header>
@@ -174,33 +188,48 @@ export function App() {
       )}
 
       {!isFullscreenReader && (
-        <nav
-          aria-label="Mobile navigation"
-          className="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--border-subtle)] bg-[var(--surface-page)]/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-sm sm:hidden"
-        >
-          <div className="grid grid-cols-5">
-            {NAV_TABS.map((tab) => {
-              const Icon = tab.icon;
-              const active = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  aria-current={active ? 'page' : undefined}
-                  onClick={() => selectTab(tab.id)}
-                  className={`flex min-h-12 flex-col items-center justify-center gap-1 py-2 text-[length:var(--text-xxs)] font-semibold transition-colors ${
-                    active
-                      ? 'text-[var(--text-link)]'
-                      : 'text-[var(--text-tertiary)]'
-                  }`}
-                >
-                  <Icon className="h-4 w-4" />
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </nav>
+        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 px-5 pb-[max(0.625rem,env(safe-area-inset-bottom))] sm:hidden">
+          <nav
+            aria-label="Mobile navigation"
+            className="fable-glass pointer-events-auto mx-auto max-w-md rounded-[32px] border border-[var(--border-subtle)] px-2.5 py-2"
+            style={{ boxShadow: 'var(--shadow-pill)' }}
+          >
+            <div className="grid grid-cols-4">
+              {NAV_TABS.map((tab) => {
+                const Icon = tab.icon;
+                const active = activeTab === tab.id && currentDest.type === 'TAB_ROOT';
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    aria-current={active ? 'page' : undefined}
+                    onClick={() => selectTab(tab.id)}
+                    className="flex flex-col items-center justify-center gap-0.5 py-0.5 transition-transform active:scale-95"
+                  >
+                    <span
+                      className={`flex h-[38px] w-[38px] items-center justify-center rounded-full transition-colors duration-200 ${
+                        active
+                          ? 'bg-[var(--action-primary-tint)] text-[var(--action-primary)]'
+                          : 'text-[var(--text-tertiary)]'
+                      }`}
+                    >
+                      <Icon className="h-[18px] w-[18px]" strokeWidth={active ? 2.25 : 1.75} />
+                    </span>
+                    <span
+                      className={`text-[10px] leading-tight transition-colors ${
+                        active
+                          ? 'font-bold text-[var(--action-primary)]'
+                          : 'font-medium text-[var(--text-tertiary)]'
+                      }`}
+                    >
+                      {tab.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </nav>
+        </div>
       )}
     </div>
   );

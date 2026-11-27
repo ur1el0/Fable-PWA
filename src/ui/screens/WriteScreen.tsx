@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import {
   AlertCircle,
-  Clock,
+  ArrowUp,
+  CheckCircle2,
   FilePlus2,
-  PenTool,
-  Send,
-  Trash2,
 } from 'lucide-react';
 import { GENRE_SUGGESTIONS } from '../../domain/models';
 import {
@@ -67,34 +65,57 @@ export function WriteScreen() {
   };
 
   return (
-    <div className="space-y-10">
-      <header className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--border-subtle)] pb-6">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-[var(--text-link)]">
-            Drafts
-          </p>
-          <h1 className="display-headline mt-1 font-bold text-[var(--text-primary)]">
-            Write
-          </h1>
-        </div>
+    <form onSubmit={handlePublish} className="space-y-5 pb-24">
+      {/* iOS WriteView Top Bar */}
+      <header className="flex items-center justify-between gap-3">
+        {confirmClear ? (
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                void clearDraft();
+                setConfirmClear(false);
+              }}
+              className="rounded-full bg-[var(--action-destructive)] px-3 py-1.5 text-xs font-semibold text-white"
+            >
+              Confirm Clear
+            </button>
+            <button
+              type="button"
+              onClick={() => setConfirmClear(false)}
+              className="text-xs font-semibold text-[var(--text-secondary)]"
+            >
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setConfirmClear(true)}
+            className="text-[15px] font-semibold text-[var(--action-destructive)]"
+          >
+            Clear
+          </button>
+        )}
 
-        <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--text-secondary)]">
-          <span className="inline-flex items-center gap-1.5 font-code">
-            <PenTool className="h-3.5 w-3.5 text-[var(--text-link)]" />
-            {wordCount.toLocaleString()} words ({parsedChapters.length}{' '}
-            {parsedChapters.length === 1 ? 'ch' : 'chs'})
-          </span>
-          <span className="inline-flex items-center gap-1.5 font-code">
-            <Clock className="h-3.5 w-3.5 text-[var(--text-link)]" />
-            ~{estimatedMinutes} min read
-          </span>
-        </div>
+        <span className="rounded-full bg-[var(--surface-raised)] px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--text-primary)]">
+          WRITER&apos;S STUDIO
+        </span>
+
+        <button
+          type="submit"
+          disabled={isSaving}
+          aria-label="Publish story"
+          className="flex h-[42px] w-[42px] items-center justify-center rounded-xl bg-[var(--action-primary)] text-white shadow-sm transition-transform active:scale-95 disabled:opacity-50"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </button>
       </header>
 
       {validationError && (
         <div
           role="alert"
-          className="flex items-center gap-2.5 rounded-[var(--radius-md)] border border-[var(--action-destructive)] p-4 text-sm font-medium text-[var(--text-primary)]"
+          className="flex items-center gap-2.5 rounded-2xl border border-[var(--action-destructive)] p-4 text-sm font-medium text-[var(--text-primary)]"
           style={{ backgroundColor: 'var(--action-destructive-tint)' }}
         >
           <AlertCircle className="h-4 w-4 shrink-0 text-[var(--action-destructive)]" />
@@ -102,162 +123,141 @@ export function WriteScreen() {
         </div>
       )}
 
-      <form onSubmit={handlePublish} className="grid gap-10 lg:grid-cols-12">
-        {/* Left 4-col Metadata Sheet */}
-        <aside className="space-y-5 lg:col-span-4">
-          <div>
-            <label
-              htmlFor="write-title"
-              className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]"
-            >
-              Title
-            </label>
-            <input
-              id="write-title"
-              type="text"
-              value={draft.title}
-              onChange={(e) => void updateDraft({ title: e.target.value })}
-              placeholder="The Cartographer of Glass Harbor"
-              className="fable-input mt-1.5 font-editorial text-base font-semibold"
-            />
-          </div>
+      {/* Card 1: IDENTITY */}
+      <section
+        className="space-y-4 rounded-[18px] border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5"
+        style={{ boxShadow: 'var(--shadow-raised)' }}
+      >
+        <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--action-primary)]">
+          IDENTITY
+        </p>
 
-          <div>
-            <label
-              htmlFor="write-genre"
-              className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]"
-            >
+        <input
+          type="text"
+          value={draft.title}
+          onChange={(e) => void updateDraft({ title: e.target.value })}
+          placeholder="Story title..."
+          aria-label="Story title"
+          className="w-full border-b border-[var(--border-subtle)] bg-transparent pb-2 font-prose text-[22px] font-bold text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:border-[var(--action-primary)] focus:outline-none"
+        />
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="space-y-2">
+            <label className="block text-xs font-semibold text-[var(--text-secondary)]">
               Genre
             </label>
             <input
-              id="write-genre"
               type="text"
               value={draft.genre}
               onChange={(e) => void updateDraft({ genre: e.target.value })}
               placeholder="Literary Fiction"
-              className="fable-input mt-1.5"
-            />
-            <div className="mt-2.5 flex flex-wrap gap-1.5">
-              {GENRE_SUGGESTIONS.map((g) => (
-                <button
-                  key={g}
-                  type="button"
-                  aria-pressed={draft.genre === g}
-                  onClick={() => void updateDraft({ genre: g })}
-                  className="fable-chip"
-                >
-                  {g}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="write-synopsis"
-              className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]"
-            >
-              Jacket Synopsis
-            </label>
-            <textarea
-              id="write-synopsis"
-              rows={4}
-              value={draft.synopsis}
-              onChange={(e) => void updateDraft({ synopsis: e.target.value })}
-              placeholder="Describe the setting, protagonist, and central question..."
-              className="fable-input mt-1.5 leading-relaxed"
+              className="w-full rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-sunken)] px-3.5 py-2 text-sm text-[var(--text-primary)] focus:border-[var(--action-primary)] focus:outline-none"
             />
           </div>
 
-          <div>
-            <label
-              htmlFor="write-ch-title"
-              className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]"
-            >
-              Opening Chapter Heading
+          <div className="space-y-2">
+            <label className="block text-xs font-semibold text-[var(--text-secondary)]">
+              Chapter Title (optional)
             </label>
             <input
-              id="write-ch-title"
               type="text"
               value={draft.chapterTitle}
               onChange={(e) => void updateDraft({ chapterTitle: e.target.value })}
               placeholder="Chapter 1: Opening"
-              className="fable-input mt-1.5"
+              className="w-full rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-sunken)] px-3.5 py-2 text-[13px] font-medium text-[var(--text-primary)] focus:border-[var(--action-primary)] focus:outline-none"
             />
           </div>
-        </aside>
-
-        {/* Right 8-col Focused Literary Manuscript Sheet */}
-        <div className="space-y-4 lg:col-span-8">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <label
-              htmlFor="write-body"
-              className="text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]"
-            >
-              Prose Manuscript
-            </label>
-            <button
-              type="button"
-              onClick={handleInsertNextChapter}
-              className="fable-btn fable-btn-secondary min-h-9 px-3 py-1.5 text-xs"
-            >
-              <FilePlus2 className="h-3.5 w-3.5" />
-              <span>Insert Chapter {parsedChapters.length + 1} Heading</span>
-            </button>
-          </div>
-
-          <textarea
-            id="write-body"
-            rows={16}
-            value={draft.body}
-            onChange={(e) => void updateDraft({ body: e.target.value })}
-            placeholder="Write your opening paragraph here. Start a new line with 'Chapter 2: Title' anytime to split into chapters."
-            className="fable-input font-editorial text-lg leading-relaxed"
-          />
-
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-            {!confirmClear ? (
-              <button
-                type="button"
-                onClick={() => setConfirmClear(true)}
-                className="fable-btn fable-btn-secondary text-xs"
-              >
-                <Trash2 className="h-4 w-4 text-[var(--action-destructive)]" />
-                <span>Discard Draft</span>
-              </button>
-            ) : (
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    void clearDraft();
-                    setConfirmClear(false);
-                  }}
-                  className="fable-btn fable-btn-destructive text-xs"
-                >
-                  <span>Confirm Discard</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setConfirmClear(false)}
-                  className="fable-btn fable-btn-secondary text-xs"
-                >
-                  <span>Keep Draft</span>
-                </button>
-              </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={isSaving}
-              className="fable-btn fable-btn-primary px-6"
-            >
-              <Send className="h-4 w-4" />
-              <span>{isSaving ? 'Publishing...' : 'Publish Edition'}</span>
-            </button>
-          </div>
         </div>
-      </form>
-    </div>
+
+        <div className="flex flex-wrap gap-1.5">
+          {GENRE_SUGGESTIONS.slice(0, 6).map((g) => (
+            <button
+              key={g}
+              type="button"
+              onClick={() => void updateDraft({ genre: g })}
+              className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                draft.genre === g
+                  ? 'bg-[var(--action-primary)] text-white'
+                  : 'bg-[var(--surface-sunken)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              {g}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Card 2: SYNOPSIS */}
+      <section
+        className="space-y-2.5 rounded-[18px] border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5"
+        style={{ boxShadow: 'var(--shadow-raised)' }}
+      >
+        <div className="flex items-center justify-between">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--action-primary)]">
+            SYNOPSIS
+          </p>
+          <span className="font-mono text-[11px] text-[var(--text-tertiary)]">
+            {draft.synopsis.length} / 200
+          </span>
+        </div>
+        <textarea
+          rows={3}
+          maxLength={400}
+          value={draft.synopsis}
+          onChange={(e) => void updateDraft({ synopsis: e.target.value })}
+          placeholder="Write a compelling hook for readers..."
+          aria-label="Story synopsis"
+          className="w-full resize-none bg-transparent text-sm leading-relaxed text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none"
+        />
+      </section>
+
+      {/* Card 3: MANUSCRIPT */}
+      <section
+        className="space-y-3 rounded-[18px] border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5"
+        style={{ boxShadow: 'var(--shadow-raised)' }}
+      >
+        <div className="flex items-center justify-between gap-2">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--action-primary)]">
+            MANUSCRIPT
+          </p>
+          <button
+            type="button"
+            onClick={handleInsertNextChapter}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--surface-sunken)] px-2.5 py-1.5 text-xs font-semibold text-[var(--text-primary)] hover:bg-[var(--action-secondary-hover)]"
+          >
+            <FilePlus2 className="h-3.5 w-3.5 text-[var(--action-primary)]" />
+            <span>Add Chapter</span>
+          </button>
+        </div>
+        <textarea
+          rows={12}
+          value={draft.body}
+          onChange={(e) => void updateDraft({ body: e.target.value })}
+          placeholder="Begin writing your story..."
+          aria-label="Manuscript body"
+          className="w-full resize-y bg-transparent font-prose text-base leading-relaxed text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none"
+        />
+      </section>
+
+      {/* Floating Glass Studio HUD */}
+      <div className="pointer-events-none fixed inset-x-0 bottom-24 z-20 flex justify-center px-4 sm:bottom-6">
+        <div
+          className="fable-glass pointer-events-auto flex items-center gap-4 rounded-3xl border border-[var(--border-subtle)] px-5 py-2.5 text-xs"
+          style={{ boxShadow: 'var(--shadow-pill)' }}
+        >
+          <span className="font-mono font-semibold text-[var(--text-primary)]">
+            {wordCount.toLocaleString()} words
+          </span>
+          <span className="text-[var(--text-tertiary)]">~{estimatedMinutes}m read</span>
+          <span
+            className="inline-flex items-center gap-1 font-semibold"
+            style={{ color: 'var(--status-success-text)' }}
+          >
+            <CheckCircle2 className="h-3.5 w-3.5" />
+            Saved locally
+          </span>
+        </div>
+      </div>
+    </form>
   );
 }

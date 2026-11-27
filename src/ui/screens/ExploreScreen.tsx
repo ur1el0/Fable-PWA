@@ -1,260 +1,166 @@
-import React from 'react';
-import { BookOpen, Image as ImageIcon, Loader2, Search, UserCheck, X } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import {
+  Check,
+  Loader2,
+  Search,
+  Sparkles,
+  X,
+} from 'lucide-react';
 import { useFableStore } from '../../store/useFableStore';
-import type { StoryProvider } from '../../domain/models';
-import { StoryCardRow } from '../components/FableComponents';
+import { BookSpineCover, StoryCardRow } from '../components/FableComponents';
 
-const PROSE_PROVIDER_CHIPS: Array<{ id: StoryProvider | 'ALL'; label: string }> = [
-  { id: 'ALL', label: 'All Books' },
-  { id: 'FABLE', label: 'Fable Originals' },
-  { id: 'GUTENBERG', label: 'Project Gutenberg' },
-  { id: 'STANDARD_EBOOKS', label: 'Standard Ebooks' },
+type QuickFilter = 'All' | 'Under 5 mins' | 'Quick Reads' | 'Books' | 'Manga';
+
+const QUICK_FILTERS: QuickFilter[] = [
+  'All',
+  'Under 5 mins',
+  'Quick Reads',
+  'Books',
+  'Manga',
 ];
 
-const TRENDING_TAGS = [
-  'Literary Fiction',
-  'Speculative',
-  'Classic',
-  'Historical',
-  'Fantasy',
-  'Pride',
-  'Observatory',
+const GENRE_GRADIENTS = [
+  'from-[#1E293B] via-[#2A3F6B] to-[#3B59F6]',
+  'from-[#1E1B4B] via-[#312E81] to-[#4F46E5]',
+  'from-[#0F172A] via-[#1E3A5F] to-[#2563EB]',
+  'from-[#18181B] via-[#27272A] to-[#4338CA]',
 ];
 
 export function ExploreScreen() {
   const stories = useFableStore((s) => s.stories);
   const downloadedIds = useFableStore((s) => s.downloadedStoryIds);
-  const exploreFormat = useFableStore((s) => s.exploreFormat);
-  const exploreProvider = useFableStore((s) => s.exploreProvider);
   const exploreQuery = useFableStore((s) => s.exploreQuery);
   const isSearching = useFableStore((s) => s.isSearchingExplore);
-  const setExploreFormat = useFableStore((s) => s.setExploreFormat);
-  const setExploreProvider = useFableStore((s) => s.setExploreProvider);
   const setExploreQuery = useFableStore((s) => s.setExploreQuery);
+  const setExploreFormat = useFableStore((s) => s.setExploreFormat);
   const openStoryDetail = useFableStore((s) => s.openStoryDetail);
   const openStoryReader = useFableStore((s) => s.openStoryReader);
   const toggleBookmark = useFableStore((s) => s.toggleBookmark);
 
-  const filteredStories = stories.filter((story) => {
-    if (story.contentFormat !== exploreFormat) return false;
-    if (exploreProvider !== 'ALL' && story.provider !== exploreProvider) return false;
-    if (!exploreQuery.trim()) return true;
-    const q = exploreQuery.trim().toLowerCase();
-    return (
-      story.title.toLowerCase().includes(q) ||
-      story.author.toLowerCase().includes(q) ||
-      story.genre.toLowerCase().includes(q) ||
-      story.synopsis.toLowerCase().includes(q)
-    );
-  });
+  const [quickFilter, setQuickFilter] = useState<QuickFilter>('All');
+  const [searchFocused, setSearchFocused] = useState(false);
 
-  const featuredAuthors = Array.from(
-    new Set(
-      stories
-        .filter((s) => s.contentFormat === exploreFormat)
-        .map((s) => s.author)
-    )
-  ).slice(0, 5);
+  const searchResults = useMemo(() => {
+    const q = exploreQuery.trim().toLowerCase();
+    if (!q) return [];
+    return stories.filter(
+      (s) =>
+        s.title.toLowerCase().includes(q) ||
+        s.author.toLowerCase().includes(q) ||
+        s.genre.toLowerCase().includes(q) ||
+        s.synopsis.toLowerCase().includes(q)
+    );
+  }, [stories, exploreQuery]);
+
+  const curatedStories = useMemo(() => {
+    switch (quickFilter) {
+      case 'Under 5 mins':
+        return stories.filter((s) => s.readTimeMinutes > 0 && s.readTimeMinutes <= 5);
+      case 'Quick Reads':
+        return stories.filter((s) => s.readTimeMinutes > 0 && s.readTimeMinutes <= 3);
+      case 'Books':
+        return stories.filter((s) => s.contentFormat === 'PROSE');
+      case 'Manga':
+        return stories.filter((s) => s.contentFormat === 'COMIC');
+      default:
+        return stories;
+    }
+  }, [stories, quickFilter]);
+
+  const popularGenres = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const s of stories) {
+      if (!s.genre) continue;
+      counts.set(s.genre, (counts.get(s.genre) ?? 0) + 1);
+    }
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 6);
+  }, [stories]);
+
+  const trendingCreators = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const s of stories) {
+      if (!s.author) continue;
+      counts.set(s.author, (counts.get(s.author) ?? 0) + 1);
+    }
+    return Array.from(counts.entries()).slice(0, 8);
+  }, [stories]);
 
   return (
-    <div className="space-y-10">
-      {/* Masthead */}
-      <header className="border-b border-[var(--border-subtle)] pb-6">
-        <h1 className="display-headline font-bold text-[var(--text-primary)]">
+    <div className="space-y-7 pb-8">
+      {/* Editorial Title Area */}
+      <header className="space-y-1">
+        <div className="flex items-center justify-between">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--action-primary)]">
+            CURATED CATALOG
+          </p>
+          <span className="text-xs font-semibold text-[var(--text-tertiary)]">
+            Discovery
+          </span>
+        </div>
+        <h1 className="font-prose text-[34px] font-bold leading-tight text-[var(--text-primary)]">
           Explore
         </h1>
       </header>
 
-      {/* Asymmetric Filter Rail + Results Split */}
-      <div className="grid gap-10 lg:grid-cols-12">
-        <aside className="space-y-6 lg:col-span-4">
-          {/* Format Toggle */}
-          <div className="space-y-2">
-            <span className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)]">
-              Reading Medium
-            </span>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                aria-pressed={exploreFormat === 'PROSE'}
-                onClick={() => setExploreFormat('PROSE')}
-                className={`fable-btn text-xs ${
-                  exploreFormat === 'PROSE'
-                    ? 'fable-btn-primary'
-                    : 'fable-btn-secondary'
-                }`}
-              >
-                <BookOpen className="h-4 w-4" />
-                <span>Books</span>
-              </button>
-              <button
-                type="button"
-                aria-pressed={exploreFormat === 'COMIC'}
-                onClick={() => setExploreFormat('COMIC')}
-                className={`fable-btn text-xs ${
-                  exploreFormat === 'COMIC'
-                    ? 'fable-btn-primary'
-                    : 'fable-btn-secondary'
-                }`}
-              >
-                <ImageIcon className="h-4 w-4" />
-                <span>Manga</span>
-              </button>
-            </div>
-          </div>
+      {/* Focus-Reactive Search Bar (iOS 14pt radius) */}
+      <div
+        className={`flex items-center gap-3 rounded-[14px] border bg-[var(--surface-card)] px-4 py-3 transition-all ${
+          searchFocused
+            ? 'border-[var(--action-primary)] ring-2 ring-[var(--action-primary-tint)]'
+            : 'border-[var(--border-subtle)]'
+        }`}
+        style={{ boxShadow: 'var(--shadow-raised)' }}
+      >
+        {isSearching ? (
+          <Loader2 className="h-4 w-4 shrink-0 animate-spin text-[var(--action-primary)]" />
+        ) : (
+          <Search
+            className={`h-4 w-4 shrink-0 ${
+              searchFocused
+                ? 'text-[var(--action-primary)]'
+                : 'text-[var(--text-tertiary)]'
+            }`}
+          />
+        )}
+        <input
+          type="search"
+          value={exploreQuery}
+          onFocus={() => setSearchFocused(true)}
+          onBlur={() => setSearchFocused(false)}
+          onChange={(e) => setExploreQuery(e.target.value)}
+          placeholder="Search stories, genres, or authors..."
+          aria-label="Search stories, genres, or authors"
+          className="w-full bg-transparent text-[15px] text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none"
+        />
+        {exploreQuery && (
+          <button
+            type="button"
+            onClick={() => setExploreQuery('')}
+            aria-label="Clear search"
+            className="rounded-full p-1 text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        )}
+      </div>
 
-          {/* Search Input */}
-          <div className="space-y-2">
-            <label
-              htmlFor="explore-search-input"
-              className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)]"
-            >
-              Keyword Search
-            </label>
-            <div className="relative">
-              <Search className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-[var(--text-tertiary)]" />
-              <input
-                id="explore-search-input"
-                type="text"
-                value={exploreQuery}
-                onChange={(e) => setExploreQuery(e.target.value)}
-                placeholder={
-                  exploreFormat === 'COMIC'
-                    ? 'Title, creator, or genre...'
-                    : 'Title, author, or subject...'
-                }
-                className="fable-input pr-9 pl-10"
-              />
-              {exploreQuery.length > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setExploreQuery('')}
-                  aria-label="Clear search query"
-                  className="fable-btn fable-btn-ghost absolute top-1/2 right-1 min-h-0 -translate-y-1/2 p-1.5"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-            {isSearching && (
-              <p className="inline-flex items-center gap-2 text-xs font-medium text-[var(--text-link)]">
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                Querying catalog sources...
+      {/* Live Search Results */}
+      {exploreQuery.trim() ? (
+        <section className="space-y-3">
+          <h2 className="font-prose text-lg font-bold text-[var(--text-primary)]">
+            Search Results ({searchResults.length})
+          </h2>
+          {searchResults.length === 0 ? (
+            <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-8 text-center">
+              <p className="text-sm font-medium text-[var(--text-secondary)]">
+                No titles found matching &ldquo;{exploreQuery}&rdquo;
               </p>
-            )}
-          </div>
-
-          {/* Source Chips */}
-          {exploreFormat === 'PROSE' && (
-            <div className="space-y-2">
-              <span className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)]">
-                Source Archive
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {PROSE_PROVIDER_CHIPS.map((chip) => (
-                  <button
-                    key={chip.id}
-                    type="button"
-                    aria-pressed={exploreProvider === chip.id}
-                    onClick={() => setExploreProvider(chip.id)}
-                    className="fable-chip"
-                  >
-                    {chip.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Subjects */}
-          <div className="space-y-2">
-            <span className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)]">
-              Subjects
-            </span>
-            <div className="flex flex-wrap gap-1.5">
-              {TRENDING_TAGS.map((tag) => {
-                const selected = exploreQuery.toLowerCase() === tag.toLowerCase();
-                return (
-                  <button
-                    key={tag}
-                    type="button"
-                    aria-pressed={selected}
-                    onClick={() => setExploreQuery(selected ? '' : tag)}
-                    className="fable-chip"
-                  >
-                    {tag}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Featured Authors */}
-          {featuredAuthors.length > 0 && (
-            <div className="space-y-2">
-              <span className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)]">
-                Featured Voices
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {featuredAuthors.map((author) => {
-                  const selected = exploreQuery.toLowerCase() === author.toLowerCase();
-                  return (
-                    <button
-                      key={author}
-                      type="button"
-                      aria-pressed={selected}
-                      onClick={() => setExploreQuery(selected ? '' : author)}
-                      className="fable-chip"
-                    >
-                      <UserCheck className="h-3 w-3" />
-                      <span>{author}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </aside>
-
-        {/* Results Column */}
-        <section className="lg:col-span-8">
-          <div className="flex items-center justify-between border-b border-[var(--border-strong)] pb-3 text-xs text-[var(--text-secondary)]">
-            <span>
-              <strong className="font-semibold text-[var(--text-primary)]">
-                {filteredStories.length}
-              </strong>{' '}
-              {filteredStories.length === 1 ? 'edition' : 'editions'} available
-            </span>
-            {exploreQuery && (
-              <button
-                type="button"
-                onClick={() => setExploreQuery('')}
-                className="font-semibold text-[var(--text-link)] hover:underline"
-              >
-                Reset filter
-              </button>
-            )}
-          </div>
-
-          {filteredStories.length === 0 ? (
-            <div className="fable-card mt-6 flex min-h-64 flex-col items-center justify-center p-8 text-center">
-              <p className="font-editorial text-xl font-semibold text-[var(--text-primary)]">
-                No matching editions found
-              </p>
-              <p className="prose-measure mt-2 text-sm text-[var(--text-secondary)]">
-                Clear the active search filter or switch between Books and Manga to browse the full archive.
-              </p>
-              <button
-                type="button"
-                onClick={() => setExploreQuery('')}
-                className="fable-btn fable-btn-secondary mt-5"
-              >
-                Clear Search Filter
-              </button>
             </div>
           ) : (
-            <div className="mt-2">
-              {filteredStories.map((story) => (
+            <div className="space-y-3">
+              {searchResults.map((story) => (
                 <StoryCardRow
                   key={story.id}
                   story={story}
@@ -267,7 +173,133 @@ export function ExploreScreen() {
             </div>
           )}
         </section>
-      </div>
+      ) : (
+        <>
+          {/* Filter Pills */}
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
+            {QUICK_FILTERS.map((filter) => {
+              const active = quickFilter === filter;
+              return (
+                <button
+                  key={filter}
+                  type="button"
+                  onClick={() => {
+                    setQuickFilter(filter);
+                    if (filter === 'Books') setExploreFormat('PROSE');
+                    if (filter === 'Manga') setExploreFormat('COMIC');
+                  }}
+                  className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-4 py-2 text-[13px] transition-all active:scale-95 ${
+                    active
+                      ? 'bg-[var(--action-primary)] font-semibold text-white shadow-sm'
+                      : 'bg-[var(--surface-sunken)] font-medium text-[var(--text-primary)] hover:bg-[var(--action-secondary-hover)]'
+                  }`}
+                >
+                  {active && <Check className="h-3.5 w-3.5" />}
+                  <span>{filter}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Curated Carousel */}
+          <section className="space-y-3">
+            <div className="flex items-center gap-1.5">
+              <Sparkles className="h-4 w-4 text-[var(--action-primary)]" />
+              <h2 className="text-lg font-bold text-[var(--text-primary)]">
+                {quickFilter === 'All' ? 'Curated Picks' : quickFilter}
+              </h2>
+            </div>
+            <div className="-mx-4 flex gap-3.5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+              {curatedStories.slice(0, 10).map((story) => (
+                <button
+                  key={story.id}
+                  type="button"
+                  onClick={() => openStoryDetail(story.id)}
+                  className="w-[124px] shrink-0 space-y-2 text-left transition-transform active:scale-95"
+                >
+                  <div className="h-[160px] w-[124px] overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-raised)]">
+                    {story.coverImageUrl ? (
+                      <img
+                        src={story.coverImageUrl}
+                        alt={story.title}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center p-2">
+                        <BookSpineCover story={story} size="md" />
+                      </div>
+                    )}
+                  </div>
+                  <p className="line-clamp-2 font-prose text-[13px] font-bold leading-snug text-[var(--text-primary)]">
+                    {story.title}
+                  </p>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          {/* Popular Genres (2-column iOS 16pt-radius image cards) */}
+          {popularGenres.length > 0 && (
+            <section className="space-y-3">
+              <h2 className="text-lg font-bold text-[var(--text-primary)]">
+                Popular Genres
+              </h2>
+              <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3">
+                {popularGenres.map(([genre, count], idx) => (
+                  <button
+                    key={genre}
+                    type="button"
+                    onClick={() => setExploreQuery(genre)}
+                    className={`relative flex h-36 flex-col justify-end overflow-hidden rounded-2xl bg-gradient-to-br ${
+                      GENRE_GRADIENTS[idx % GENRE_GRADIENTS.length]
+                    } p-4 text-left transition-transform active:scale-95`}
+                    style={{ boxShadow: 'var(--shadow-raised)' }}
+                  >
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                    <div className="relative z-10 space-y-1.5">
+                      <span className="inline-block rounded-full bg-white/20 px-2.5 py-0.5 text-[11px] font-semibold text-white backdrop-blur-sm">
+                        {count} {count === 1 ? 'title' : 'titles'}
+                      </span>
+                      <p className="font-prose text-lg font-bold leading-tight text-white">
+                        {genre}
+                      </p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Trending Creators */}
+          {trendingCreators.length > 0 && (
+            <section className="space-y-3">
+              <h2 className="text-lg font-bold text-[var(--text-primary)]">
+                Trending Creators
+              </h2>
+              <div className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+                {trendingCreators.map(([author, count]) => (
+                  <button
+                    key={author}
+                    type="button"
+                    onClick={() => setExploreQuery(author)}
+                    className="flex w-[95px] shrink-0 flex-col items-center gap-2 text-center transition-transform active:scale-95"
+                  >
+                    <div className="flex h-[68px] w-[68px] items-center justify-center rounded-full border-2 border-white bg-[var(--action-primary-tint)] font-prose text-xl font-bold text-[var(--action-primary)] shadow-sm dark:border-[var(--border-subtle)]">
+                      {author.slice(0, 1).toUpperCase()}
+                    </div>
+                    <p className="line-clamp-1 w-full font-prose text-[13px] font-bold text-[var(--text-primary)]">
+                      {author}
+                    </p>
+                    <p className="text-[11px] text-[var(--text-tertiary)]">
+                      {count} {count === 1 ? 'work' : 'works'}
+                    </p>
+                  </button>
+                ))}
+              </div>
+            </section>
+          )}
+        </>
+      )}
     </div>
   );
 }
