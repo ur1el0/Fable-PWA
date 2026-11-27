@@ -85,7 +85,14 @@ export interface StoryHighlight {
   createdAtEpochMillis: number;
 }
 
-export type ReaderTheme = 'PAPER' | 'SEPIA' | 'NIGHT';
+export type ReaderTheme =
+  | 'WHITE'
+  | 'PAPER'
+  | 'SEPIA'
+  | 'CHARCOAL'
+  | 'MIDNIGHT'
+  | 'OLED'
+  | 'NIGHT';
 export type ReaderFont = 'SERIF' | 'SANS' | 'MONO';
 export type ReaderLayout = 'SCROLL' | 'PAGINATED';
 export type ComicReaderLayout = 'WEBTOON' | 'MANGA';

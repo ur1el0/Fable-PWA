@@ -48,6 +48,12 @@ const READER_SURFACE_VARS: Record<
   ReaderTheme,
   { bg: string; ink: string; muted: string; border: string }
 > = {
+  WHITE: {
+    bg: 'var(--reader-white-bg)',
+    ink: 'var(--reader-white-ink)',
+    muted: 'var(--reader-white-muted)',
+    border: 'var(--reader-white-border)',
+  },
   PAPER: {
     bg: 'var(--reader-paper-bg)',
     ink: 'var(--reader-paper-ink)',
@@ -59,6 +65,24 @@ const READER_SURFACE_VARS: Record<
     ink: 'var(--reader-sepia-ink)',
     muted: 'var(--reader-sepia-muted)',
     border: 'var(--reader-sepia-border)',
+  },
+  CHARCOAL: {
+    bg: 'var(--reader-charcoal-bg)',
+    ink: 'var(--reader-charcoal-ink)',
+    muted: 'var(--reader-charcoal-muted)',
+    border: 'var(--reader-charcoal-border)',
+  },
+  MIDNIGHT: {
+    bg: 'var(--reader-midnight-bg)',
+    ink: 'var(--reader-midnight-ink)',
+    muted: 'var(--reader-midnight-muted)',
+    border: 'var(--reader-midnight-border)',
+  },
+  OLED: {
+    bg: 'var(--reader-oled-bg)',
+    ink: 'var(--reader-oled-ink)',
+    muted: 'var(--reader-oled-muted)',
+    border: 'var(--reader-oled-border)',
   },
   NIGHT: {
     bg: 'var(--reader-night-bg)',

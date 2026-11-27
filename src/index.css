@@ -78,7 +78,12 @@
   --spine-slate: #334155;
   --spine-plum: #4F46E5;
 
-  /* Reader Surface Tokens */
+  /* Reader Surface Tokens (6 iOS Themes) */
+  --reader-white-bg: #FFFFFF;
+  --reader-white-ink: #111721;
+  --reader-white-muted: #5A6474;
+  --reader-white-border: #E3E8ED;
+
   --reader-paper-bg: #FAF5EB;
   --reader-paper-ink: #2E2621;
   --reader-paper-muted: #6E6259;
@@ -88,6 +93,21 @@
   --reader-sepia-ink: #26262E;
   --reader-sepia-muted: #5A5A66;
   --reader-sepia-border: #E0DBD1;
+
+  --reader-charcoal-bg: #1F2126;
+  --reader-charcoal-ink: #EBEDF2;
+  --reader-charcoal-muted: #9BA3B0;
+  --reader-charcoal-border: #32363F;
+
+  --reader-midnight-bg: #141C24;
+  --reader-midnight-ink: #E6EDF2;
+  --reader-midnight-muted: #94A3B8;
+  --reader-midnight-border: #243044;
+
+  --reader-oled-bg: #000000;
+  --reader-oled-ink: #EBEBEB;
+  --reader-oled-muted: #8E95A2;
+  --reader-oled-border: #222226;
 
   --reader-night-bg: #141C24;
   --reader-night-ink: #E6EDF2;

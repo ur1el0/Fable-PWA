@@ -114,20 +114,48 @@ export function ReaderDisplaySheet({
 
           <div>
             <span className="block font-semibold">Reading Surface</span>
-            <div className="mt-2 grid grid-cols-3 gap-2">
-              {(['PAPER', 'SEPIA', 'NIGHT'] as ReaderTheme[]).map((t) => (
-                <button
-                  key={t}
-                  type="button"
-                  aria-pressed={prefs.theme === t}
-                  onClick={() => onUpdatePreference('theme', t)}
-                  className={`fable-btn text-xs ${
-                    prefs.theme === t ? 'fable-btn-primary' : 'fable-btn-secondary'
-                  }`}
-                >
-                  {t}
-                </button>
-              ))}
+            <div className="mt-2.5 grid grid-cols-6 gap-2">
+              {(
+                [
+                  { id: 'WHITE', label: 'White', bg: 'var(--reader-white-bg)', ink: 'var(--reader-white-ink)' },
+                  { id: 'PAPER', label: 'Paper', bg: 'var(--reader-paper-bg)', ink: 'var(--reader-paper-ink)' },
+                  { id: 'SEPIA', label: 'Sepia', bg: 'var(--reader-sepia-bg)', ink: 'var(--reader-sepia-ink)' },
+                  { id: 'CHARCOAL', label: 'Charcoal', bg: 'var(--reader-charcoal-bg)', ink: 'var(--reader-charcoal-ink)' },
+                  { id: 'MIDNIGHT', label: 'Midnight', bg: 'var(--reader-midnight-bg)', ink: 'var(--reader-midnight-ink)' },
+                  { id: 'OLED', label: 'OLED', bg: 'var(--reader-oled-bg)', ink: 'var(--reader-oled-ink)' },
+                ] as const
+              ).map((swatch) => {
+                const selected = prefs.theme === swatch.id;
+                return (
+                  <button
+                    key={swatch.id}
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() => onUpdatePreference('theme', swatch.id)}
+                    className="flex flex-col items-center gap-1.5"
+                  >
+                    <span
+                      className={`flex h-10 w-10 items-center justify-center rounded-full border-2 text-xs font-bold transition-transform active:scale-95 ${
+                        selected
+                          ? 'border-[var(--action-primary)] ring-2 ring-[var(--action-primary-tint)]'
+                          : 'border-[var(--border-subtle)]'
+                      }`}
+                      style={{ backgroundColor: swatch.bg, color: swatch.ink }}
+                    >
+                      Aa
+                    </span>
+                    <span
+                      className={`text-[10px] ${
+                        selected
+                          ? 'font-bold text-[var(--action-primary)]'
+                          : 'font-medium text-[var(--text-tertiary)]'
+                      }`}
+                    >
+                      {swatch.label}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 

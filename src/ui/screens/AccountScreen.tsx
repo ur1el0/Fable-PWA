@@ -73,9 +73,12 @@ export function AccountScreen() {
   };
 
   return (
-    <div className="space-y-12">
-      <header className="border-b border-[var(--border-subtle)] pb-6">
-        <h1 className="display-headline font-bold text-[var(--text-primary)]">
+    <div className="space-y-8 pb-8">
+      <header className="space-y-1">
+        <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--action-primary)]">
+          PROFILE &amp; PREFERENCES
+        </p>
+        <h1 className="font-prose text-[32px] font-bold leading-tight text-[var(--text-primary)]">
           Account
         </h1>
       </header>
@@ -393,12 +396,18 @@ export function AccountScreen() {
 
         {/* Secondary 5-col Rail: Appearance & Server Diagnostics */}
         <aside className="space-y-6 lg:col-span-5">
-          <section className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--surface-raised)] p-6">
-            <h2 className="font-editorial text-lg font-bold text-[var(--text-primary)]">
-              Appearance
+          <section
+            className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5"
+            style={{ boxShadow: 'var(--shadow-raised)' }}
+          >
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--action-primary)]">
+              APPEARANCE
+            </p>
+            <h2 className="mt-1 font-prose text-lg font-bold text-[var(--text-primary)]">
+              App Theme
             </h2>
 
-            <div className="mt-4 grid grid-cols-3 gap-2">
+            <div className="mt-4 grid grid-cols-3 gap-1 rounded-xl bg-[var(--surface-sunken)] p-1">
               {(
                 [
                   { id: 'SYSTEM', label: 'System', icon: Monitor },
@@ -414,8 +423,10 @@ export function AccountScreen() {
                     type="button"
                     aria-pressed={active}
                     onClick={() => setAppAppearance(opt.id)}
-                    className={`fable-btn text-xs ${
-                      active ? 'fable-btn-primary' : 'fable-btn-secondary'
+                    className={`flex items-center justify-center gap-1.5 rounded-[10px] py-2 text-xs font-semibold transition-all ${
+                      active
+                        ? 'bg-[var(--surface-card)] text-[var(--text-primary)] shadow-sm'
+                        : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                     }`}
                   >
                     <Icon className="h-3.5 w-3.5" />
